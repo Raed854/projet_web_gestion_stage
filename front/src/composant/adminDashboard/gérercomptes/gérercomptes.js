@@ -1,36 +1,45 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Modal } from "react-bootstrap";
-import { Card } from "react-bootstrap";
-import { Table } from "react-bootstrap";
+import { Button, Modal, Card, Table } from "react-bootstrap";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import EditUser from "../edituser/edituser";
+import SideBar from "../../sidebar/sidebar";
 export default function UserManagement() {
-  const [users] = useState([
+  const [users, setUsers] = useState([
     { id: 1, nom: "Dupont", prenom: "Jean", email: "jean@example.com" },
     { id: 2, nom: "Martin", prenom: "Claire", email: "claire@example.com" },
   ]);
-  
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+
+  const handleDelete = (id) => {
+    setUsers(users.filter((user) => user.id !== id));
+  };
+
+  const handleUpdate = (user) => {
+    setEditingUser(user);
+  };
+
+  const handleSaveUser = (updatedUser) => {
+    setUsers(users.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
+    setEditingUser(null); 
+  };
 
   return (
     <Card className="shadow p-3 mb-5 bg-body rounded">
+      <SideBar/>
       <Card.Body>
-        {/* Entête de gestion des utilisateurs */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Gestion des utilisateurs</h2>
-
-          {/* Bouton Ajouter utilisateur */}
-          <Button variant="primary" className="d-flex align-items-center" onClick={handleShow}>
-            <Plus size={16} className="mr-2" /> Ajouter
+          <Button variant="primary" onClick={() => setShowCreateModal(true)}>
+            <Plus size={16} className="me-2" /> Ajouter
           </Button>
         </div>
 
-        {/* Modal pour ajouter un utilisateur */}
-        <Modal show={show} onHide={handleClose}>
+      
+        <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Créer un utilisateur</Modal.Title>
           </Modal.Header>
@@ -44,7 +53,7 @@ export default function UserManagement() {
           </Modal.Body>
         </Modal>
 
-        {/* Tableau des utilisateurs */}
+        {/* Tableau utilisateurs */}
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -61,10 +70,19 @@ export default function UserManagement() {
                 <td>{user.nom}</td>
                 <td>{user.prenom}</td>
                 <td>
-                  <Button variant="outline-primary" size="sm" className="me-2">
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    className="me-2"
+                    onClick={() => handleUpdate(user)}
+                  >
                     <Pencil size={14} /> Modifier
                   </Button>
-                  <Button variant="danger" size="sm">
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => handleDelete(user.id)}
+                  >
                     <Trash2 size={14} /> Supprimer
                   </Button>
                 </td>
@@ -72,6 +90,22 @@ export default function UserManagement() {
             ))}
           </tbody>
         </Table>
+
+        {/* Modal Modifier utilisateur */}
+        <Modal show={!!editingUser} onHide={() => setEditingUser(null)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modifier l'utilisateur</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {editingUser && (
+              <EditUser
+                user={editingUser}
+                onClose={() => setEditingUser(null)}
+                onSave={handleSaveUser}
+              />
+            )}
+          </Modal.Body>
+        </Modal>
       </Card.Body>
     </Card>
   );

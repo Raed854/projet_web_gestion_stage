@@ -1,9 +1,11 @@
 import React from "react";
 import './Bilanrapide.css';
+import SideBar from "../../sidebar/sidebar";
 
 export default function DashboardSummary() {
   return (
     <div className="dashboard-table-container">
+      <SideBar/>
       <table className="dashboard-table">
         <thead>
           <tr>

@@ -1,5 +1,5 @@
-// src/composant/sidebar/sidebar.js
 import React from "react";
+import { Link } from "react-router-dom";
 import "./sidebar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faCog } from "@fortawesome/free-solid-svg-icons";
@@ -10,10 +10,19 @@ const SideBar = () => {
       <h3>Admin Menu</h3>
       <ul>
         <li>
-          <FontAwesomeIcon icon={faUsers} /> Utilisateurs
+          <Link to="/Bilan">
+            <FontAwesomeIcon icon={faUsers} /> Bilan Rapide
+          </Link>
         </li>
         <li>
-          <FontAwesomeIcon icon={faCog} /> Paramètres
+          <Link to="/compte">
+            <FontAwesomeIcon icon={faCog} /> Gérer Comptes
+          </Link>
+        </li>
+        <li>
+          <Link to="/rapport">
+            <FontAwesomeIcon icon={faCog} /> Rapport
+          </Link>
         </li>
       </ul>
     </div>

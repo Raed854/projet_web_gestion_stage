@@ -1,0 +1,91 @@
+.report-export-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    max-width: 600px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .report-export-title {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .report-export-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .report-select {
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid #d0d0d0;
+    background-color: #f7f7f7;
+    font-size: 0.9rem;
+    min-width: 200px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .report-select:hover, .report-select:focus {
+    border-color: #2c68a8;
+    box-shadow: 0 0 0 2px rgba(44, 104, 168, 0.1);
+  }
+  
+  .export-button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+  }
+  
+  .export-button:hover {
+    transform: translateY(-1px);
+  }
+  
+  .export-button:active {
+    transform: translateY(1px);
+  }
+  
+  .export-pdf {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .export-pdf:hover {
+    background-color: #c0392b;
+  }
+  
+  .export-excel {
+    background-color: #27ae60;
+    color: white;
+  }
+  
+  .export-excel:hover {
+    background-color: #219653;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 480px) {
+    .report-export-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .report-select, .export-button {
+      width: 100%;
+    }
+  }
