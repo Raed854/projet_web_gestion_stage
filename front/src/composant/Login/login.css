@@ -1,0 +1,245 @@
+/* Reset et variables globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --primary-color: #e30613; /* Rouge ATB */
+  --secondary-color: #cf0512; /* Rouge ATB légèrement plus foncé */
+  --text-color: #333;
+  --light-text: #777;
+  --background: #f8f9fa;
+  --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --input-border: #ddd;
+  --button-hover: #b30410; /* Rouge ATB encore plus foncé pour le hover */
+}
+
+/* Conteneur principal */
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 80%;
+}
+
+/* Conteneur image */
+.imageContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loginImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Conteneur formulaire */
+.formContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.containerLogin {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Carte de connexion */
+.carde {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.9rem 2rem;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 4px solid var(--primary-color); /* Bordure rouge ATB en haut de la carte */
+}
+
+.carde:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Titre Login */
+.login {
+  display: block;
+  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Boîtes d'entrée */
+.inputBox {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.inputBox input {
+  width: 100%;
+  padding: 1rem;
+  background: transparent;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  outline: none;
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.inputBox input:focus {
+  border-color: var(--primary-color);
+}
+
+/* Animation des placeholders */
+.inputBox span {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--light-text);
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.inputBox input:focus ~ span,
+.inputBox input:valid ~ span {
+  color: var(--primary-color);
+  transform: translateY(-170%);
+  font-size: 0.8rem;
+  background-color: white;
+  padding: 0 0.5rem;
+}
+
+/* Bouton de connexion */
+.enter {
+  width: 100%;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.enter:hover {
+  background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(227, 6, 19, 0.3); /* Rouge ATB avec opacité */
+}
+
+.enter:active {
+  transform: translateY(0);
+}
+
+/* Liens de bas de page */
+.loginLinks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.link:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+
+/* Responsive pour les écrans plus petits */
+@media (max-width: 768px) {
+  .loginContainer {
+    flex-direction: column;
+  }
+  
+  .imageContainer {
+    height: 30vh;
+  }
+  
+  .formContainer {
+    padding: 1.5rem;
+  }
+  
+  .carde {
+    padding: 2rem 1.5rem;
+  }
+}
+.socialLogin {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
+
+.socialButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex: 1;
+}
+
+.socialButton.google {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.socialButton.mobile {
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.socialButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.socialButton:active {
+  transform: translateY(0);
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.socialButton.google .icon {
+  color: #db4437;
+}
+
+.socialButton.mobile .icon {
+  color: #34a853;
+}

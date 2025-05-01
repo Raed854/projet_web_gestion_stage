@@ -1,0 +1,60 @@
+.encadrant-container {
+    min-height: 100vh;
+    padding-left: 0;
+  }
+  
+  .main-content {
+    margin-left: 250px;
+    padding: 30px;
+    transition: margin-left 0.3s;
+  }
+  
+  .clickable-name {
+    cursor: pointer;
+    color: #0d6efd;
+    font-weight: 500;
+  }
+  
+  .clickable-name:hover {
+    text-decoration: underline;
+    color: #0b5ed7;
+  }
+  
+  .detail-modal .modal-content {
+    max-height: 85vh;
+  }
+  
+  .detail-modal .modal-header {
+    background: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  .detail-modal .modal-title {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .progress {
+    height: 25px;
+    background-color: #e9ecef;
+  }
+  
+  .progress-bar {
+    background-color: #4a90e2;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .main-content {
+      margin-left: 0;
+      padding: 15px;
+    }
+    
+    .detail-modal .modal-dialog {
+      margin: 10px;
+    }
+    
+    .detail-modal .form-control {
+      font-size: 14px;
+    }
+  }

@@ -1,0 +1,105 @@
+/* Style général pour la modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Titre de la modal */
+.modalContent h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+/* Style pour les champs de formulaire */
+.inputBox {
+  margin-bottom: 15px;
+}
+
+.inputBox label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+}
+
+.inputBox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.inputBox input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+/* Style pour les boutons */
+.modalButtons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.modalButtons button {
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modalButtons button:first-child {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+}
+
+.modalButtons button:first-child:hover {
+  background-color: #3a7bc8;
+}
+
+.modalButtons button:last-child {
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.modalButtons button:last-child:hover {
+  background-color: #e5e5e5;
+}
+
+/* Animation pour l'apparition de la modal */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modalOverlay {
+  animation: fadeIn 0.3s ease-out;
+}

@@ -1,0 +1,91 @@
+/* gérercomptes.css - Styles for the user management component */
+
+/* Card styling */
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #111827;
+  }
+  
+  /* Header container with title and add button */
+  div > div:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Table styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead th {
+    font-weight: 600;
+    text-align: left;
+    color: #6b7280;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  tr {
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  tr:last-child {
+    border-bottom: none;
+  }
+  
+  td {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Action buttons container */
+  td:last-child {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  /* Button styling */
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  /* Dialog content styling */
+  .dialog-content {
+    padding: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #111827;
+  }
+  
+  a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    td:last-child {
+      flex-direction: column;
+    }
+    
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
