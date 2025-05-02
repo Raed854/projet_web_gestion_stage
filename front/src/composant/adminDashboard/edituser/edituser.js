@@ -5,18 +5,16 @@ const EditUser = ({ user, onClose, onSave }) => {
   const [email, setEmail] = useState("");
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [telephone, setTelephone] = useState("");
-  const [password, setPassword] = useState("");
+  const [classe, setClasse] = useState("");
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     if (user) {
       setEmail(user.email);
       setNom(user.nom);
       setPrenom(user.prenom);
-      setPhoto(user.photo || "");
-      setTelephone(user.telephone || "");
-      setPassword(user.password || "");
+      setClasse(user.classe || "");
+      setRole(user.role || "");
     }
   }, [user]);
 
@@ -26,9 +24,8 @@ const EditUser = ({ user, onClose, onSave }) => {
       email,
       nom,
       prenom,
-      photo,
-      telephone,
-      password,
+      classe,
+      role,
     });
     onClose();
   };
@@ -56,22 +53,17 @@ const EditUser = ({ user, onClose, onSave }) => {
         </div>
 
         <div className="inputBox">
-          <label>Photo (URL):</label>
-          <input value={photo} onChange={(e) => setPhoto(e.target.value)} />
+          <label>Classe:</label>
+          <input value={classe} onChange={(e) => setClasse(e.target.value)} />
         </div>
 
         <div className="inputBox">
-          <label>Téléphone:</label>
-          <input value={telephone} onChange={(e) => setTelephone(e.target.value)} />
-        </div>
-
-        <div className="inputBox">
-          <label>Mot de passe:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <label>Rôle:</label>
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="admin">Admin</option>
+            <option value="encadrant">Encadrant</option>
+            <option value="etudiant">Etudiant</option>
+          </select>
         </div>
 
         <div className="modalButtons">

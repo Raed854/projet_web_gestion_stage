@@ -58,6 +58,24 @@
   box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
+/* Style pour le champ select */
+.inputBox select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: white;
+  color: #555;
+}
+
+.inputBox select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
 /* Style pour les boutons */
 .modalButtons {
   display: flex;
