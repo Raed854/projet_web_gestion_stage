@@ -3,6 +3,12 @@ const sequelize = require('./db');
 const userRoutes = require('./routes/userRoutes');
 const cors = require('cors');
 
+const stageRoutes = require('./routes/stageRoutes');
+const messageRoutes = require('./routes/messageRoutes');
+const compteRenduRoutes = require('./routes/compteRenduRoutes');
+const commentaireRoutes = require('./routes/commentaireRoutes');
+const tacheRoutes = require('./routes/tacheRoutes');
+
 const app = express();
 const PORT = 5000;
 
@@ -14,6 +20,12 @@ app.use(cors({
 }));
 
 app.use('/users', userRoutes);
+app.use('/stages', stageRoutes);
+app.use('/messages', messageRoutes);
+app.use('/compteRendus', compteRenduRoutes);
+app.use('/commentaires', commentaireRoutes);
+app.use('/taches', tacheRoutes);
+
 
 sequelize.sync() // { force: true } to drop and recreate
   .then(() => {

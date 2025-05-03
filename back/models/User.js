@@ -34,4 +34,37 @@ const User = sequelize.define('User', {
   timestamps: false
 });
 
+const Stage = require('./Stage');
+const Message = require('./Message');
+
+// A Utilisateur (Etudiant) can effectuer many Stages
+User.hasMany(Stage, {
+  foreignKey: 'etudiantId',
+  as: 'stagesEffectues'
+});
+Stage.belongsTo(User, {
+  foreignKey: 'etudiantId',
+  as: 'etudiant'
+});
+
+// A Utilisateur (Encadrant) can encadrer many Stages
+User.hasMany(Stage, {
+  foreignKey: 'encadrantId',
+  as: 'stagesEncadres'
+});
+Stage.belongsTo(User, {
+  foreignKey: 'encadrantId',
+  as: 'encadrant'
+});
+
+// A Utilisateur can send many Messages
+User.hasMany(Message, {
+  foreignKey: 'destinataire',
+  as: 'messagesRecus'
+});
+Message.belongsTo(User, {
+  foreignKey: 'destinataire',
+  as: 'utilisateur'
+});
+
 module.exports = User;

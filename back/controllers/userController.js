@@ -1,7 +1,21 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { JWT_SECRET } = process.env;
 
+// Middleware to verify JWT
+exports.verifyToken = (req, res, next) => {
+  const token = req.headers['authorization'];
+  if (!token) return res.status(403).send('Token is required');
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(401).send('Invalid token');
+    req.userId = decoded.id;
+    next();
+  });
+};
+
+// CRUD operations
 exports.createUser = async (req, res) => {
   try {
     const { password, ...otherData } = req.body;
@@ -13,6 +27,7 @@ exports.createUser = async (req, res) => {
     const user = await User.create({ ...otherData, password: hashedPassword });
     res.status(201).json(user);
   } catch (error) {
+    console.error('Error details:', error);
     console.error(error);
     res.status(500).json({ error: 'Failed to create user' });
   }
@@ -21,19 +36,19 @@ exports.createUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.findAll();
-    res.json(users);
+    res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch users' });
+    res.status(400).json({ error: error.message });
   }
 };
 
 exports.getUserById = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
-    if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json(user);
+    if (!user) return res.status(404).send('User not found');
+    res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch user' });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -42,9 +57,9 @@ exports.updateUser = async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
     await user.update(req.body);
-    res.json(user);
+    res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update user' });
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -53,9 +68,9 @@ exports.deleteUser = async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found' });
     await user.destroy();
-    res.json({ message: 'User deleted successfully' });
+    res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete user' });
+    res.status(400).json({ error: error.message });
   }
 };
 

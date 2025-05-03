@@ -1,0 +1,48 @@
+const Tache = require('../models/Tache');
+
+// CRUD operations
+exports.createTache = async (req, res) => {
+  try {
+    const tache = await Tache.create(req.body);
+    res.status(201).json(tache);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.getTaches = async (req, res) => {
+  try {
+    const taches = await Tache.findAll();
+    res.status(200).json(taches);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.getTacheById = async (req, res) => {
+  try {
+    const tache = await Tache.findByPk(req.params.id);
+    if (!tache) return res.status(404).send('Tache not found');
+    res.status(200).json(tache);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.updateTache = async (req, res) => {
+  try {
+    const tache = await Tache.update(req.body, { where: { id: req.params.id } });
+    res.status(200).json(tache);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.deleteTache = async (req, res) => {
+  try {
+    await Tache.destroy({ where: { id: req.params.id } });
+    res.status(204).send();
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

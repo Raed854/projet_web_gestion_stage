@@ -3,12 +3,12 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-// Routes for user operations
-router.post('/', userController.createUser);
-router.get('/', userController.getUsers);
-router.get('/:id', userController.getUserById);
-router.put('/:id', userController.updateUser);
-router.delete('/:id', userController.deleteUser);
+// Routes with JWT middleware
+router.post('/', userController.verifyToken, userController.createUser);
+router.get('/', userController.verifyToken, userController.getUsers);
+router.get('/:id', userController.verifyToken, userController.getUserById);
+router.put('/:id', userController.verifyToken, userController.updateUser);
+router.delete('/:id', userController.verifyToken, userController.deleteUser);
 
 // Login route
 router.post('/login', userController.login);
