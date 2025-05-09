@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { Card, CardContent, Button, Input, TextareaAutosize, TextField, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Button,
+  Input,
+  TextareaAutosize,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton
+} from '@mui/material';
 import './etusdient.css';
 import SideBar from "../sidebar/sidebar";
-import CloseIcon from '@mui/icons-material/Close'; // For closing dialog
+import CloseIcon from '@mui/icons-material/Close';
 
 const DashboardPage = () => {
   const [selectedStage, setSelectedStage] = useState(null);
@@ -15,7 +26,7 @@ const DashboardPage = () => {
       dateDebut: "2025-04-01",
       dateFin: "2025-07-01",
       objectifs: "Découvrir l'environnement professionnel, développer un projet web.",
-      milestones: [
+      jalons: [
         { id: 1, title: "Rapport d'avancement", deadline: "2025-05-15", status: "Non soumis" },
         { id: 2, title: "Rapport final", deadline: "2025-06-30", status: "Non soumis" }
       ]
@@ -26,7 +37,7 @@ const DashboardPage = () => {
       dateDebut: "2025-03-01",
       dateFin: "2025-06-01",
       objectifs: "Étudier les comportements clients, créer des rapports de performance.",
-      milestones: [
+      jalons: [
         { id: 1, title: "Rapport initial", deadline: "2025-03-15", status: "Non soumis" },
         { id: 2, title: "Présentation finale", deadline: "2025-05-30", status: "Non soumis" }
       ]
@@ -44,16 +55,18 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="tableau-bord-conteneur">
       <SideBar />
-      <div className="dashboard-content">
-        <h2 className="dashboard-title">Liste des stages</h2>
-        <table className="stages-table">
+      <div className="contenu-tableau-bord">
+        <h2 className="titre-tableau-bord">Liste des stages</h2>
+        <table className="tableau-stages">
           <thead>
             <tr>
               <th>Nom du stage</th>
               <th>Date de début</th>
               <th>Date de fin</th>
+              <th>Message</th>
+              <th>Commentaire</th>
             </tr>
           </thead>
           <tbody>
@@ -61,7 +74,7 @@ const DashboardPage = () => {
               <tr key={stage.id}>
                 <td>
                   <button 
-                    className="stage-link"
+                    className="lien-stage"
                     onClick={() => handleOpenDialog(stage)}
                   >
                     {stage.nom}
@@ -93,7 +106,7 @@ const DashboardPage = () => {
             </IconButton>
           </DialogTitle>
           <DialogContent>
-            {selectedStage && <DashboardStage stage={selectedStage} />}
+            {selectedStage && <TableauStage stage={selectedStage} />}
           </DialogContent>
         </Dialog>
       </div>
@@ -101,36 +114,34 @@ const DashboardPage = () => {
   );
 };
 
-const DashboardStage = ({ stage }) => {
-  const [submissions, setSubmissions] = useState([]);
-  const [selectedMilestone, setSelectedMilestone] = useState("");
-  const [file, setFile] = useState(null);
-  const [comment, setComment] = useState("");
+const TableauStage = ({ stage }) => {
+  const [soumissions, setSoumissions] = useState([]);
+  const [jalonChoisi, setJalonChoisi] = useState("");
+  const [fichier, setFichier] = useState(null);
+  const [commentaire, setCommentaire] = useState("");
 
-  if (!stage) return null;
-
-  const handleSubmit = () => {
-    if (selectedMilestone && file) {
-      const newSubmission = {
-        milestone: selectedMilestone,
+  const handleSoumettre = () => {
+    if (jalonChoisi && fichier) {
+      const nouvelleSoumission = {
+        jalon: jalonChoisi,
         date: new Date().toISOString().split("T")[0],
-        comment,
-        fileName: file.name,
-        status: "En attente"
+        commentaire,
+        nomFichier: fichier.name,
+        statut: "En attente"
       };
-      setSubmissions([...submissions, newSubmission]);
-      setSelectedMilestone("");
-      setFile(null);
-      setComment("");
+      setSoumissions([...soumissions, nouvelleSoumission]);
+      setJalonChoisi("");
+      setFichier(null);
+      setCommentaire("");
     }
   };
 
   return (
-    <div className="stage-dashboard">
-      <h2 className="stage-title">Tableau de bord du stage</h2>
+    <div className="tableau-stage">
+      <h2 className="titre-stage">Tableau de bord du stage</h2>
 
       <Card>
-        <CardContent className="stage-info">
+        <CardContent className="info-stage">
           <p><strong>Nom :</strong> {stage.nom}</p>
           <p><strong>Dates :</strong> {stage.dateDebut} → {stage.dateFin}</p>
           <p><strong>Objectifs :</strong> {stage.objectifs}</p>
@@ -138,12 +149,12 @@ const DashboardStage = ({ stage }) => {
       </Card>
 
       <Card>
-        <CardContent className="milestones-section">
-          <h3 className="section-title">Jalons</h3>
-          <ul className="milestones-list">
-            {stage.milestones.map((m) => (
+        <CardContent className="section-jalons">
+          <h3 className="titre-section">Jalons</h3>
+          <ul className="liste-jalons">
+            {stage.jalons.map((m) => (
               <li key={m.id}>
-                {m.title} (échéance : {m.deadline}) — <span className="milestone-status">{m.status}</span>
+                {m.title} (échéance : {m.deadline}) — <span className="statut-jalon">{m.status}</span>
               </li>
             ))}
           </ul>
@@ -151,39 +162,39 @@ const DashboardStage = ({ stage }) => {
       </Card>
 
       <Card>
-        <CardContent className="submission-form">
-          <h3 className="section-title">Soumettre un rapport</h3>
-          <div className="form-container">
+        <CardContent className="formulaire-soumission">
+          <h3 className="titre-section">Soumettre un rapport</h3>
+          <div className="conteneur-formulaire">
             <label>Jalon :</label>
             <select
-              className="milestone-select"
-              value={selectedMilestone}
-              onChange={(e) => setSelectedMilestone(e.target.value)}
+              className="selection-jalon"
+              value={jalonChoisi}
+              onChange={(e) => setJalonChoisi(e.target.value)}
             >
               <option value="">-- Choisir un jalon --</option>
-              {stage.milestones.map((m) => (
+              {stage.jalons.map((m) => (
                 <option key={m.id} value={m.title}>{m.title}</option>
               ))}
             </select>
 
             <label>Commentaire :</label>
             <TextareaAutosize 
-              value={comment} 
-              onChange={(e) => setComment(e.target.value)}
-              className="comment-textarea"
+              value={commentaire} 
+              onChange={(e) => setCommentaire(e.target.value)}
+              className="zone-commentaire"
             />
 
             <label>Fichier :</label>
             <Input 
               type="file" 
-              onChange={(e) => setFile(e.target.files[0])}
-              className="file-input"
+              onChange={(e) => setFichier(e.target.files[0])}
+              className="champ-fichier"
             />
 
             <Button 
-              onClick={handleSubmit}
-              className="submit-button"
-              disabled={!selectedMilestone || !file}
+              onClick={handleSoumettre}
+              className="bouton-soumettre"
+              disabled={!jalonChoisi || !fichier}
             >
               Soumettre
             </Button>
@@ -192,18 +203,18 @@ const DashboardStage = ({ stage }) => {
       </Card>
 
       <Card>
-        <CardContent className="submissions-history">
-          <h3 className="section-title">Historique des soumissions</h3>
-          {submissions.length === 0 ? (
-            <p className="no-submissions">Aucune soumission pour le moment.</p>
+        <CardContent className="historique-soumissions">
+          <h3 className="titre-section">Historique des soumissions</h3>
+          {soumissions.length === 0 ? (
+            <p className="aucune-soumission">Aucune soumission pour le moment.</p>
           ) : (
-            <ul className="submissions-list">
-              {submissions.map((s, i) => (
-                <li key={i} className="submission-item">
-                  <strong>{s.milestone}</strong> — soumis le {s.date} <br />
-                  Fichier : {s.fileName} <br />
-                  Commentaire : {s.comment} <br />
-                  Statut : <span className="submission-status">{s.status}</span>
+            <ul className="liste-soumissions">
+              {soumissions.map((s, i) => (
+                <li key={i} className="soumission-item">
+                  <strong>{s.jalon}</strong> — soumis le {s.date} <br />
+                  Fichier : {s.nomFichier} <br />
+                  Commentaire : {s.commentaire} <br />
+                  Statut : <span className="statut-soumission">{s.statut}</span>
                 </li>
               ))}
             </ul>

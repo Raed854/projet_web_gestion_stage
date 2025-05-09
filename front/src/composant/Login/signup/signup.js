@@ -27,11 +27,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className="signupContainer">
-      <div className="signupCard">
-        <h2>Sign Up</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="inputBox">
+    <div className="signup-wrapper">
+      <div className="signup-form-card">
+        <h2 className="signup-title">Créer un compte</h2>
+        <form onSubmit={handleSubmit} className="signup-form">
+          <div className="form-group">
             <input
               type="text"
               name="nom"
@@ -39,9 +39,9 @@ const SignUp = () => {
               value={formData.nom}
               onChange={handleChange}
             />
-            <span>Nom</span>
+            <span className="form-label">Nom</span>
           </div>
-          <div className="inputBox">
+          <div className="form-group">
             <input
               type="text"
               name="prenom"
@@ -49,18 +49,18 @@ const SignUp = () => {
               value={formData.prenom}
               onChange={handleChange}
             />
-            <span>Prénom</span>
+            <span className="form-label">Prénom</span>
           </div>
-          <div className="inputBox">
+          <div className="form-group">
             <input
               type="file"
               name="photo"
               accept="image/*"
               onChange={handleChange}
             />
-            <span>Photo</span>
+            <span className="form-label">Photo</span>
           </div>
-          <div className="inputBox">
+          <div className="form-group">
             <input
               type="email"
               name="email"
@@ -68,9 +68,9 @@ const SignUp = () => {
               value={formData.email}
               onChange={handleChange}
             />
-            <span>Email</span>
+            <span className="form-label">Email</span>
           </div>
-          <div className="inputBox">
+          <div className="form-group">
             <input
               type="tel"
               name="telephone"
@@ -78,9 +78,9 @@ const SignUp = () => {
               value={formData.telephone}
               onChange={handleChange}
             />
-            <span>Téléphone</span>
+            <span className="form-label">Téléphone</span>
           </div>
-          <div className="inputBox">
+          <div className="form-group">
             <input
               type="password"
               name="password"
@@ -88,9 +88,9 @@ const SignUp = () => {
               value={formData.password}
               onChange={handleChange}
             />
-            <span>Mot de passe</span>
+            <span className="form-label">Mot de passe</span>
           </div>
-          <button type="submit" className="enters">S'inscrire</button>
+          <button type="submit" className="signup-button">S'inscrire</button>
         </form>
       </div>
     </div>

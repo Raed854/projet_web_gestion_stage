@@ -1,35 +1,33 @@
 import React, { useState } from "react";
 import "./login.css";
-import login from "../../assets/login.jpg";
+import login from "../../assets/atb.jpg";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaMobileAlt } from "react-icons/fa";
 import axios from "axios";
 
 const Login = () => {
-  const [email, setEmail] = useState(""); // Changed from username to email
+  const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const response = await axios.post("http://localhost:5000/users/login", {
-        email, // Changed from username to email
+        email, 
         password,
       });
 
-      const { message, token,role } = response.data;
+      const { message, token, role } = response.data;
 
-      // Store the JWT in localStorage or a cookie
       localStorage.setItem("jwt", token);
       localStorage.setItem("role", role);
-      // Navigate to the home page
-      if(role === "admin") {
+      
+      if (role === "admin") {
         navigate("/AdminDashboard");
-      }else if(role === "encadrant") {
+      } else if (role === "encadrant") {
         navigate("/encadrant");
-      }
-      else if(role === "etudiant") {
+      } else if (role === "etudiant") {
         navigate("/etudient");
       }
     } catch (error) {
@@ -39,51 +37,51 @@ const Login = () => {
   };
 
   return (
-    <div className="loginContainer">
-      <div className="imageContainer">
-        <img src={login} alt="" className="loginImage" />
+    <div className="login-wrapper">
+      <div className="image-wrapper">
+        <img src={login} alt="login" className="login-image" />
       </div>
-      <div className="formContainer">
-        <div className="containerLogin">
-          <div className="carde">
-            <a className="login">Log in</a>
-            <div className="inputBox">
-              <input
-                type="text"
-                required="required"
-                value={email} // Changed from username to email
-                onChange={(e) => setEmail(e.target.value)} // Changed from setUsername to setEmail
-              />
-              <span className="user">Email</span>
-            </div>
-            <div className="inputBox">
-              <input
-                type="password"
-                required="required"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <span>Password</span>
-            </div>
-            <button className="enter" onClick={handleLogin}>
-              Enter
+      <div className="form-wrapper">
+        <div className="login-card">
+          <a className="login-heading">Log in</a>
+          <div className="input-group">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input-field"
+            />
+            <span className="input-label">Email</span>
+          </div>
+          <div className="input-group">
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input-field"
+            />
+            <span className="input-label">Password</span>
+          </div>
+          <button className="submit-btn" onClick={handleLogin}>
+            Enter
+          </button>
+
+          <div className="social-login-wrapper">
+            <button className="social-btn google-btn">
+              <FaGoogle className="social-icon" />
+              Google
             </button>
-                          <div className="socialLogin">
-                <button className="socialButton google">
-                  <FaGoogle className="icon" />
-                   Google
-                </button>
-                <button className="socialButton mobile">
-                  <FaMobileAlt className="icon" />
-                  Phone
-                </button>
-              </div>
+            <button className="social-btn mobile-btn">
+              <FaMobileAlt className="social-icon" />
+              Phone
+            </button>
+          </div>
 
-            <div className="loginLinks">
-            <Link to="/password" className="link">Forgot password</Link>
-
-            <Link to="/signup" className="link">signup</Link>
-              </div>    
+          <div className="login-links">
+            <Link to="/password" className="forgot-password-link">Forgot password?</Link>
+            <Link to="/signup" className="signup-link">Sign Up</Link>
           </div>
         </div>
       </div>

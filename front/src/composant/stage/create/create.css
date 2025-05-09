@@ -1,0 +1,203 @@
+/* Modern variables for consistent theming */
+:root {
+    --primary-color: #3a86ff;
+    --primary-light: #86b6ff;
+    --primary-dark: #2b5fab;
+    --accent-color: #ff006e;
+    --success-color: #38b000;
+    --warning-color: #ffbe0b;
+    --error-color: #ff5400;
+    --text-dark: #333;
+    --text-light: #f8f9fa;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --border-radius: 12px;
+    --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+  }
+  /* Form element styling */
+  .formulaire-stage form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .formulaire-stage label {
+    color: var(--text-dark);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    display: block;
+    transition: var(--transition);
+  }
+  
+  .formulaire-stage input,
+  .formulaire-stage select,
+  .formulaire-stage textarea {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    transition: var(--transition);
+    width: 100%;
+  }
+  
+  .formulaire-stage input:focus,
+  .formulaire-stage select:focus,
+  .formulaire-stage textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    background-color: #fff;
+  }
+  
+  .formulaire-stage textarea {
+    min-height: 70px;
+    resize: vertical;
+  }
+  
+  /* Innovative hover effects */
+  .formulaire-stage input:hover,
+  .formulaire-stage select:hover,
+  .formulaire-stage textarea:hover {
+    border-color: var(--primary-light);
+    background-color: #f5f8ff;
+  }
+  
+  /* Style for select dropdowns */
+  .formulaire-stage select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%233a86ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+  
+  /* Button styling */
+  .groupe-boutons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+  
+  .formulaire-stage button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .formulaire-stage button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+  }
+  
+  .formulaire-stage button:active {
+    transform: translateY(0);
+  }
+  
+  /* Beautiful ripple effect on button click */
+  .formulaire-stage button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #fff 10%, transparent 10%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 1s;
+  }
+  
+  .formulaire-stage button:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+  }
+  
+  /* Two-column layout for student and supervisor */
+  .ligne-selects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .formulaire-stage {
+      padding: 1.5rem;
+      margin: 1rem;
+    }
+    
+    .ligne-selects {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+  }
+  
+  /* Status field styling with color indicators */
+  .formulaire-stage select[name="statut"] option[value="En attente"] {
+    background-color: var(--warning-color);
+    color: var(--text-dark);
+  }
+  
+  .formulaire-stage select[name="statut"] option[value="Validé"] {
+    background-color: var(--success-color);
+    color: var(--text-light);
+  }
+  
+  .formulaire-stage select[name="statut"] option[value="Terminé"] {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+  }
+  
+  /* Animated focus label effect */
+  .groupe-champ {
+    position: relative;
+  }
+  
+  /* Float in animation for the form on load */
+  @keyframes floatIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .formulaire-stage {
+    animation: floatIn 0.5s ease forwards;
+  }
+  
+  /* Staggered animation for form fields */
+  .formulaire-stage form > * {
+    opacity: 0;
+    animation: floatIn 0.4s ease forwards;
+  }
+  
+  .formulaire-stage form > *:nth-child(1) { animation-delay: 0.1s; }
+  .formulaire-stage form > *:nth-child(2) { animation-delay: 0.15s; }
+  .formulaire-stage form > *:nth-child(3) { animation-delay: 0.2s; }
+  .formulaire-stage form > *:nth-child(4) { animation-delay: 0.25s; }
+  .formulaire-stage form > *:nth-child(5) { animation-delay: 0.3s; }
+  .formulaire-stage form > *:nth-child(6) { animation-delay: 0.35s; }
+  .formulaire-stage form > *:nth-child(7) { animation-delay: 0.4s; }
+  .formulaire-stage form > *:nth-child(8) { animation-delay: 0.45s; }
