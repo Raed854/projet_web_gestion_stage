@@ -1,13 +1,15 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 const { JWT_SECRET } = process.env;
 
 // Middleware to verify JWT
 exports.verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'];
+  token = req.headers['authorization'];
   if (!token) return res.status(403).send('Token is required');
-
+  token = token.slice(7);
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) return res.status(401).send('Invalid token');
     req.userId = decoded.id;
@@ -15,26 +17,53 @@ exports.verifyToken = (req, res, next) => {
   });
 };
 
+// Helper to send email
+async function sendPasswordEmail(email, password) {
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: process.env.SMTP_SECURE === 'true',
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    to: email,
+    subject: 'Your Account Password',
+    text: `Welcome! Your generated password is: ${password}`,
+  });
+}
+
 // CRUD operations
 exports.createUser = async (req, res) => {
   try {
+    // Generate a random password
+    const randomPassword = crypto.randomBytes(8).toString('hex');
     const { password, ...otherData } = req.body;
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash the random password
+    const hashedPassword = await bcrypt.hash(randomPassword, 10);
 
-    // Create user with hashed password
+    // Create user with hashed random password
     const user = await User.create({ ...otherData, password: hashedPassword });
-    res.status(201).json(user);
+
+    // Send email with the password
+    await sendPasswordEmail(user.email, randomPassword);
+
+    // Optionally, return the plain password to the client (for initial communication)
+    res.status(201).json({ ...user.toJSON(), plainPassword: randomPassword });
   } catch (error) {
     console.error('Error details:', error);
-    console.error(error);
     res.status(500).json({ error: 'Failed to create user' });
   }
 };
 
 exports.getUsers = async (req, res) => {
   try {
+    // Print the JWT token as an error in the terminal
     const users = await User.findAll();
     res.status(200).json(users);
   } catch (error) {
@@ -91,13 +120,45 @@ exports.login = async (req, res) => {
     }
 
     // Generate JWT token with role
-    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    const token = jwt.sign(
+      { id: user.id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '1h',
+      }
+    );
 
     res.json({ message: 'Login successful', token, role: user.role });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to login' });
+  }
+};
+
+// Get all etudiants (id, nom, prenom)
+exports.getEtudiants = async (req, res) => {
+  console.log('getEtudiants controller called');
+  try {
+    const etudiants = await User.findAll({
+      where: { role: 'etudiant' },
+    });
+    res.status(200).json(etudiants);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Get all encadrants (id, nom, prenom)
+exports.getEncadrants = async (req, res) => {
+  console.log('getEncadrants controller called');
+  try {
+    const encadrants = await User.findAll({
+      where: { role: 'encadrant' },
+    });
+    console.log('Fetched encadrants:', encadrants);
+    res.status(200).json(encadrants);
+  } catch (error) {
+    console.error('Error in getEncadrants:', error);
+    res.status(400).json({ error: error.message });
   }
 };

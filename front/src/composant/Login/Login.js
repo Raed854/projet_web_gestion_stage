@@ -4,7 +4,7 @@ import login from "../../assets/atb.jpg";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaMobileAlt } from "react-icons/fa";
-import axios from "axios";
+import api from "../../api";
 
 const Login = () => {
   const [email, setEmail] = useState(""); 
@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/users/login", {
+      const response = await api.post("users/login", {
         email, 
         password,
       });
@@ -24,11 +24,11 @@ const Login = () => {
       localStorage.setItem("role", role);
       
       if (role === "admin") {
-        navigate("/AdminDashboard");
+        navigate("/users");
       } else if (role === "encadrant") {
-        navigate("/encadrant");
+        navigate("/users");
       } else if (role === "etudiant") {
-        navigate("/etudient");
+        navigate("/users");
       }
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);
@@ -67,22 +67,6 @@ const Login = () => {
           <button className="submit-btn" onClick={handleLogin}>
             Enter
           </button>
-
-          <div className="social-login-wrapper">
-            <button className="social-btn google-btn">
-              <FaGoogle className="social-icon" />
-              Google
-            </button>
-            <button className="social-btn mobile-btn">
-              <FaMobileAlt className="social-icon" />
-              Phone
-            </button>
-          </div>
-
-          <div className="login-links">
-            <Link to="/password" className="forgot-password-link">Forgot password?</Link>
-            <Link to="/signup" className="signup-link">Sign Up</Link>
-          </div>
         </div>
       </div>
     </div>

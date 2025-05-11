@@ -1,10 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./sidebar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faCog } from "@fortawesome/free-solid-svg-icons";
 
 const SideBar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("role");
+    navigate("/");
+  };
+
   return (
     <div className="sidebar">
       <h3>Admin Menu</h3>
@@ -15,16 +23,23 @@ const SideBar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/compte">
-            <FontAwesomeIcon icon={faCog} /> Gérer Comptes
+          <Link to="/adminstage">
+            <FontAwesomeIcon icon={faCog} /> Gestion des Stages
           </Link>
         </li>
         <li>
-          <Link to="/rapport">
-            <FontAwesomeIcon icon={faCog} /> Rapport
+          <Link to="/users">
+            <FontAwesomeIcon icon={faCog} /> Gérer Comptes
           </Link>
         </li>
       </ul>
+      <button
+        className="logOutButton"
+        onClick={handleLogout}
+        style={{ marginTop: "2rem", width: "100%" }}
+      >
+        Logout
+      </button>
     </div>
   );
 };

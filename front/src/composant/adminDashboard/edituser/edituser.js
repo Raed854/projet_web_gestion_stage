@@ -1,33 +1,73 @@
 import React, { useState, useEffect } from "react";
 import "./edituser.css";
+import { toast } from 'react-toastify';
 
 const EditUser = ({ user, onClose, onSave }) => {
-  const [email, setEmail] = useState("");
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [classe, setClasse] = useState("");
-  const [role, setRole] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    nom: "",
+    prenom: "",
+    classe: "",
+    role: ""
+  });
 
   useEffect(() => {
     if (user) {
-      setEmail(user.email);
-      setNom(user.nom);
-      setPrenom(user.prenom);
-      setClasse(user.classe || "");
-      setRole(user.role || "");
+      setFormData({
+        ...user,
+        classe: user.classe || "",
+        role: user.role || ""
+      });
     }
   }, [user]);
 
-  const handleSave = () => {
-    onSave({
-      ...user,
-      email,
-      nom,
-      prenom,
-      classe,
-      role,
-    });
-    onClose();
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+  };
+
+  const validateName = (name) => {
+    const nameRegex = /^[a-zA-ZÀ-ÿ\s'-]+$/;
+    return nameRegex.test(name);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    // Immediate validation feedback
+    if (name === 'nom' && value && !validateName(value)) {
+      toast.warn("Le nom ne doit contenir que des lettres");
+    }
+    if (name === 'prenom' && value && !validateName(value)) {
+      toast.warn("Le prénom ne doit contenir que des lettres");
+    }
+    if (name === 'email' && value && !validateEmail(value)) {
+      toast.warn("Format d'email invalide");
+    }
+  };
+
+  const handleSubmit = () => {
+    // Only validate format if values are provided
+    if (formData.nom?.trim() && !validateName(formData.nom)) {
+      toast.error("Le nom ne doit contenir que des lettres");
+      return;
+    }
+
+    if (formData.prenom?.trim() && !validateName(formData.prenom)) {
+      toast.error("Le prénom ne doit contenir que des lettres");
+      return;
+    }
+
+    if (formData.email?.trim() && !validateEmail(formData.email)) {
+      toast.error("Veuillez fournir une adresse email valide");
+      return;
+    }
+
+    onSave({ ...user, ...formData });
   };
 
   if (!user) return null;
@@ -39,27 +79,49 @@ const EditUser = ({ user, onClose, onSave }) => {
 
         <div className="inputBox">
           <label>Nom:</label>
-          <input value={nom} onChange={(e) => setNom(e.target.value)} />
+          <input 
+            name="nom"
+            value={formData.nom} 
+            onChange={handleChange}
+          />
         </div>
 
         <div className="inputBox">
           <label>Prénom:</label>
-          <input value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+          <input 
+            name="prenom"
+            value={formData.prenom} 
+            onChange={handleChange}
+          />
         </div>
 
         <div className="inputBox">
           <label>Email:</label>
-          <input value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input 
+            type="email"
+            name="email"
+            value={formData.email} 
+            onChange={handleChange}
+          />
         </div>
 
         <div className="inputBox">
           <label>Classe:</label>
-          <input value={classe} onChange={(e) => setClasse(e.target.value)} />
+          <input 
+            name="classe"
+            value={formData.classe} 
+            onChange={handleChange}
+          />
         </div>
 
         <div className="inputBox">
           <label>Rôle:</label>
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <select 
+            name="role"
+            value={formData.role} 
+            onChange={handleChange}
+          >
+            <option value="">-- Sélectionner un rôle --</option>
             <option value="admin">Admin</option>
             <option value="encadrant">Encadrant</option>
             <option value="etudiant">Etudiant</option>
@@ -67,7 +129,7 @@ const EditUser = ({ user, onClose, onSave }) => {
         </div>
 
         <div className="modalButtons">
-          <button onClick={handleSave}>Enregistrer</button>
+          <button onClick={handleSubmit}>Enregistrer</button>
           <button onClick={onClose}>Annuler</button>
         </div>
       </div>

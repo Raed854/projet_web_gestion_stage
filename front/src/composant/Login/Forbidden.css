@@ -1,0 +1,82 @@
+.forbidden-container {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fff0f0 0%, #ffeaea 100%);
+  animation: fadeIn 0.7s;
+  z-index: 1;
+}
+
+.forbidden-code {
+  font-size: 7rem;
+  font-weight: 900;
+  color: #e74c3c;
+  margin-bottom: 0;
+  letter-spacing: 8px;
+  text-shadow: 0 4px 24px #e74c3c33;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+.forbidden-title {
+  color: #e74c3c;
+  margin-top: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px #e74c3c22;
+}
+
+.forbidden-message {
+  color: #555;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  width: 100%;
+  max-width: none;
+}
+
+.forbidden-link {
+  color: #fff;
+  background: linear-gradient(90deg, #e74c3c 60%, #ff7675 100%);
+  text-decoration: none;
+  padding: 0.8rem 2.2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 12px #e74c3c33;
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.forbidden-link:hover {
+  background: linear-gradient(90deg, #ff7675 0%, #e74c3c 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 24px #e74c3c44;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .forbidden-code {
+    font-size: 4rem;
+  }
+  .forbidden-title {
+    font-size: 1.5rem;
+  }
+  .forbidden-message {
+    font-size: 1rem;
+    max-width: 90vw;
+  }
+  .forbidden-link {
+    font-size: 1rem;
+    padding: 0.7rem 1.5rem;
+  }
+}

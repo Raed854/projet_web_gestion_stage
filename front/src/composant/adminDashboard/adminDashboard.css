@@ -71,12 +71,16 @@ html, body {
   /* Style des boutons */
   button {
     padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
+    margin-right: 0.8rem; /* Increased from 0.5rem */
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.2s ease;
+  }
+  
+  td button {
+    margin: 0 8px; /* Added specific margin for table buttons */
   }
   
   button:first-of-type {
@@ -97,8 +101,177 @@ html, body {
     background-color: #c0392b;
   }
   
-  /* Responsive design */
-  @media (max-width: 768px) {
+  /* Create User Button */
+  .mainContent > button {
+    background-color: #4a90e2;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s ease;
+    float: right;
+  }
+  
+  .mainContent > button:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  }
+  
+  /* Popup styling matching EditUser */
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popupContent {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .popupContent h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .popupContent form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .popupContent label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .popupContent input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  .popupContent input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  }
+  
+  .popupContent button {
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .popupContent button[type="submit"] {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+  }
+  
+  .popupContent button[type="submit"]:hover {
+    background-color: #357abd;
+  }
+  
+  .popupContent button[type="button"] {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    margin-left: 10px;
+  }
+  
+  .popupContent button[type="button"]:hover {
+    background-color: #e5e5e5;
+  }
+  
+  /* Form actions */
+  .popupContent form button {
+    margin-top: 10px;
+    display: inline-flex;
+  }
+  
+  .popupContent form > div:last-child {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px; /* Increased from 10px */
+    margin-top: 20px;
+  }
+  
+  /* Toast Notifications */
+:root {
+  --toastify-color-success: #28a745;
+  --toastify-color-error: #dc3545;
+  --toastify-color-warning: #ffc107;
+  --toastify-color-info: #17a2b8;
+}
+
+.Toastify__toast {
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: inherit;
+}
+
+.Toastify__toast-body {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.Toastify__progress-bar {
+  height: 4px;
+}
+
+.Toastify__toast--success {
+  background: var(--toastify-color-success);
+}
+
+.Toastify__toast--error {
+  background: var(--toastify-color-error);
+}
+
+.Toastify__toast--warning {
+  background: var(--toastify-color-warning);
+  color: #333;
+}
+
+.Toastify__toast--info {
+  background: var(--toastify-color-info);
+}
+
+/* Remove required field indicators */
+.inputBox label[for]:after {
+  content: "";
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
     .dashboardLayout {
       flex-direction: column;
     }
