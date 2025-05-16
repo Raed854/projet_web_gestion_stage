@@ -46,3 +46,16 @@ exports.deleteTache = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+exports.getTachesByStageId = async (req, res) => {
+  try {
+    const taches = await Tache.findAll({
+      where: { stageId: req.params.stageId }
+    });
+
+    if (taches.length === 0) return res.status(404).send('No taches found for this stageId');
+
+    res.status(200).json(taches);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

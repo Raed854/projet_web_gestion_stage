@@ -9,5 +9,6 @@ router.get('/', userController.verifyToken, tacheController.getTaches);
 router.get('/:id', userController.verifyToken, tacheController.getTacheById);
 router.put('/:id', userController.verifyToken, tacheController.updateTache);
 router.delete('/:id', userController.verifyToken, tacheController.deleteTache);
+router.get('/stage/:stageId', userController.verifyToken,tacheController.getTachesByStageId);
 
 module.exports = router;

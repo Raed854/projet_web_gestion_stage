@@ -4,7 +4,7 @@ const userController = require('../controllers/userController');
 const router = express.Router();
 
 // Routes with JWT middleware
-router.post('/', userController.createUser);
+router.post('/',userController.verifyToken, userController.createUser);
 router.get('/', userController.verifyToken, userController.getUsers);
 
 // Get all etudiants (id, nom, prenom)
