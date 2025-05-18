@@ -5,6 +5,40 @@ import SideBar from "../../sidebar/sidebar";
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [notification, setNotification] = useState(null);
+
+  const showNotification = (message, type = 'success') => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 3000);
+  };
+
+  const createChat = async (userId) => {
+    try {
+      const token = localStorage.getItem('jwt');
+      const currentUserId = localStorage.getItem('userId');
+      
+      const response = await fetch('http://localhost:5000/chats', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          participant1Id: Number(currentUserId),
+          participant2Id: Number(userId)
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la création du chat');
+      }
+
+      showNotification('Chat créé avec succès');
+    } catch (error) {
+      console.error('Error creating chat:', error);
+      showNotification('Erreur lors de la création du chat', 'error');
+    }
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -46,14 +80,22 @@ const AdminDashboard = () => {
                 <td>{u.prenom}</td>
                 <td>{u.email}</td>
                 <td>{u.classe}</td>
-                <td>{u.role}</td>
-                <td>
-                  <button onClick={() => setSelectedUser(u)}>Détails</button>
+                <td>{u.role}</td>              <td>
+                  <div className="button-group">
+                    <button onClick={() => setSelectedUser(u)}>Détails</button>
+                    <button onClick={() => createChat(u.id)}>Nouveau Chat</button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+        {notification && (
+          <div className={`notification ${notification.type}`}>
+            {notification.message}
+          </div>
+        )}
 
         {selectedUser && (
           <div className="popup">

@@ -46,3 +46,20 @@ exports.deleteCommentaire = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+exports.getCommentairesByCompteRenduId = async (req, res) => {
+  try {
+    const commentaires = await Commentaire.findAll({
+      where: { compteRenduId: req.params.compteRenduId }
+    });
+
+    if (commentaires.length === 0) {
+      return res.status(200).json([]); // Return empty array if no comments found
+    }
+
+    res.status(200).json(commentaires);
+  } catch (error) {
+    console.error('Error fetching commentaires by compte rendu:', error);
+    res.status(400).json({ error: error.message });
+  }
+};

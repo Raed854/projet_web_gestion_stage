@@ -22,7 +22,6 @@ const EncadrantInterface = () => {
   const [userCache, setUserCache] = useState({});
 
   const allowedTypes = ["PFE", "Stage d'été"];
-
   // Fetch stages from backend on mount
   useEffect(() => {
     const fetchStages = async () => {
@@ -33,7 +32,24 @@ const EncadrantInterface = () => {
             Authorization: `Bearer ${localStorage.getItem('jwt')}`
           }
         });
-        setStages(response.data);
+        
+        // Fetch progress for each stage
+        const stagesWithProgress = await Promise.all(
+          response.data.map(async (stage) => {
+            try {
+              const progressResponse = await axios.get(`http://localhost:5000/stages/${stage.id}/progress`, {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('jwt')}`
+                }
+              });
+              return { ...stage, progress: progressResponse.data.progress };
+            } catch (error) {
+              console.error(`Error fetching progress for stage ${stage._id}:`, error);
+              return { ...stage, progress: 0 };
+            }
+          })
+        );
+        setStages(stagesWithProgress);
       } catch (error) {
         toast.error("Erreur lors du chargement des stages");
       } finally {
@@ -253,12 +269,12 @@ const EncadrantInterface = () => {
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
-                  <th>Intitulé</th>
-                  <th>Type de Stage</th>
+                  <th>Intitulé</th>                  <th>Type de Stage</th>
                   <th>Date de début</th>
                   <th>Date de fin</th>
                   <th>Étudiant</th>
                   <th>Encadrant</th>
+                  <th>Progression</th>
                   <th>Statut</th>
                   <th>Actions</th>
                 </tr>
@@ -268,10 +284,18 @@ const EncadrantInterface = () => {
                   <tr key={stage._id}>
                     <td className="clickable-name">{stage.intitule}</td>
                     <td>{stage.typeStage}</td>
-                    <td>{formatDate(stage.dateDebut)}</td>
-                    <td>{formatDate(stage.dateFin)}</td>
+                    <td>{formatDate(stage.dateDebut)}</td>                    <td>{formatDate(stage.dateFin)}</td>
                     <td>{userCache[stage.etudiantId] || <span>...</span>}</td>
                     <td>{userCache[stage.encadrantId] || <span>...</span>}</td>
+                    <td>
+                      <div className="progress-bar">
+                        <div 
+                          className="progress-fill" 
+                          style={{ width: `${stage.progress}%` }}
+                        />
+                        <span className="progress-text">{stage.progress}%</span>
+                      </div>
+                    </td>
                     <td>
                       <span className={`status-badge ${stage.statut ? 'active' : 'inactive'}`}>
                         {stage.statut ? 'en cours' : 'complet'}

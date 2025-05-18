@@ -9,5 +9,6 @@ router.get('/', userController.verifyToken, commentaireController.getCommentaire
 router.get('/:id', userController.verifyToken, commentaireController.getCommentaireById);
 router.put('/:id', userController.verifyToken, commentaireController.updateCommentaire);
 router.delete('/:id', userController.verifyToken, commentaireController.deleteCommentaire);
+router.get('/compteRendu/:compteRenduId', userController.verifyToken, commentaireController.getCommentairesByCompteRenduId);
 
 module.exports = router;

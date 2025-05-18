@@ -1,12 +1,30 @@
 /* Existing styles kept - add the new styles below */
 
+.stage-detail-wrapper {
+  position: fixed;
+  top: 0;
+  left: 250px; /* Width of the sidebar */
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
 .stage-detail-container {
+  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust layout for mobile devices */
+@media (max-width: 768px) {
+  .stage-detail-wrapper {
+    left: 0;
+  }
+  
+  .stage-detail-container {
+    padding: 1rem;
+  }
 }
 
 .stage-title {
@@ -18,28 +36,35 @@
   border-bottom: 2px solid #f0f0f0;
 }
 
+/* Make stage info grid more responsive */
 .stage-info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
+/* Improve info items appearance */
 .info-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.5rem;
 }
 
 .info-label {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #7f8c8d;
+  color: #6b7280;
+  text-transform: uppercase;
 }
 
 .info-value {
-  font-size: 16px;
-  color: #2c3e50;
+  font-size: 1rem;
+  color: #1f2937;
 }
 
 .status-badge {
@@ -61,7 +86,11 @@
 }
 
 .description-section {
-  margin-bottom: 32px;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
 }
 
 .section-title {
@@ -72,9 +101,9 @@
 }
 
 .description-text {
-  font-size: 15px;
+  font-size: 1rem;
   line-height: 1.6;
-  color: #34495e;
+  color: #4b5563;
 }
 
 .loading-container {
@@ -121,6 +150,10 @@
 
 /* New styles for tasks section */
 .tasks-section {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   margin-top: 32px;
   padding-top: 24px;
   border-top: 2px solid #f0f0f0;
@@ -130,25 +163,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 1.5rem;
 }
 
 .add-task-button {
-  background-color: #3498db;
+  background-color: #3b82f6;
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
   font-weight: 500;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
   transition: background-color 0.2s;
 }
 
 .add-task-button:hover {
-  background-color: #2980b9;
+  background-color: #2563eb;
 }
 
 .no-tasks {
@@ -160,24 +192,24 @@
 }
 
 .tasks-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  gap: 1rem;
 }
 
 .task-item {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 16px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  align-items: flex-start;
+  transition: all 0.2s;
 }
 
 .task-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .task-content {
@@ -261,106 +293,112 @@
   background-color: rgba(231, 76, 60, 0.1);
 }
 
-/* Modal styles */
-.modal-overlay {
+/* Modal styles with increased specificity */
+.stage-detail-container .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
-.modal-content {
-  background-color: #ffffff;
+.stage-detail-container .modal-content {
+  background-color: #ffffff !important;
   border-radius: 8px;
   padding: 24px;
-  width: 500px;
-  max-width: 90%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+  margin: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   color: #2c3e50;
+  position: relative;
+  z-index: 10000;
 }
 
-.modal-title {
-  font-size: 18px;
+.stage-detail-container .modal-content .modal-title {
+  font-size: 1.25rem;
   font-weight: 600;
   color: #2c3e50;
-  margin-top: 0;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.form-group {
-  margin-bottom: 16px;
+.stage-detail-container .modal-content .form-group {
+  margin-bottom: 1rem;
 }
 
-.form-group label {
+.stage-detail-container .modal-content .form-group label {
   display: block;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
-  margin-bottom: 6px;
-  color: #2c3e50;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+.stage-detail-container .modal-content .form-group input,
+.stage-detail-container .modal-content .form-group textarea,
+.stage-detail-container .modal-content .form-group select {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  color: #2c3e50;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background-color: #ffffff;
+  color: #1f2937;
+  font-size: 0.875rem;
 }
 
-.form-group textarea {
+.stage-detail-container .modal-content .form-group textarea {
   min-height: 100px;
   resize: vertical;
 }
 
-.modal-actions,
-.form-actions {
+.stage-detail-container .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 24px;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
 }
 
-.add-button,
-.save-button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
+.stage-detail-container .modal-actions .add-button,
+.stage-detail-container .modal-actions .save-button {
+  background-color: #3b82f6;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
   font-weight: 500;
-}
-
-.add-button:hover,
-.save-button:hover {
-  background-color: #2980b9;
-}
-
-.cancel-button {
-  background-color: #f1f1f1;
-  color: #7f8c8d;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
-.cancel-button:hover {
-  background-color: #e0e0e0;
+.stage-detail-container .modal-actions .add-button:hover,
+.stage-detail-container .modal-actions .save-button:hover {
+  background-color: #2563eb;
+}
+
+.stage-detail-container .modal-actions .cancel-button {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.stage-detail-container .modal-actions .cancel-button:hover {
+  background-color: #e5e7eb;
 }
 
 /* Task edit form */

@@ -3,11 +3,15 @@ const sequelize = require('./db');
 const userRoutes = require('./routes/userRoutes');
 const cors = require('cors');
 
+// Import models and associations
+require('./models/index');
+
 const stageRoutes = require('./routes/stageRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const compteRenduRoutes = require('./routes/compteRenduRoutes');
 const commentaireRoutes = require('./routes/commentaireRoutes');
 const tacheRoutes = require('./routes/tacheRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 
 const app = express();
 const PORT = 5000;
@@ -34,6 +38,7 @@ app.use('/messages', messageRoutes);
 app.use('/compteRendus', compteRenduRoutes);
 app.use('/commentaires', commentaireRoutes);
 app.use('/taches', tacheRoutes);
+app.use('/chats', chatRoutes);
 
 // 404 handler for API
 app.use((req, res, next) => {
@@ -43,7 +48,7 @@ app.use((req, res, next) => {
   next();
 });
 
-sequelize.sync() // { force: true } to drop and recreate
+sequelize.sync() // Only sync without recreating tables
   .then(() => {
     console.log('Database synced');
     app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

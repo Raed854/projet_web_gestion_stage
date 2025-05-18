@@ -1,4 +1,5 @@
 const Tache = require('../models/Tache');
+const Stage = require('../models/Stage');
 
 // CRUD operations
 exports.createTache = async (req, res) => {
@@ -46,6 +47,7 @@ exports.deleteTache = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 exports.getTachesByStageId = async (req, res) => {
   try {
     const taches = await Tache.findAll({
@@ -56,6 +58,28 @@ exports.getTachesByStageId = async (req, res) => {
 
     res.status(200).json(taches);
   } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.getTachesByEtudiantId = async (req, res) => {
+  try {
+    const taches = await Tache.findAll({
+      include: [{
+        model: Stage,
+        as: 'stage',
+        where: { etudiantId: req.params.etudiantId },
+        attributes: ['id', 'intitule'] // Only include relevant stage info
+      }]
+    });
+
+    if (taches.length === 0) {
+      return res.status(200).json([]); // Return empty array instead of 404
+    }
+
+    res.status(200).json(taches);
+  } catch (error) {
+    console.error('Error fetching taches by etudiant:', error);
     res.status(400).json({ error: error.message });
   }
 };

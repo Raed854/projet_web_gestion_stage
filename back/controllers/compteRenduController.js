@@ -46,3 +46,33 @@ exports.deleteCompteRendu = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+exports.acceptCompteRendu = async (req, res) => {
+  try {
+    const compteRendu = await CompteRendu.findByPk(req.params.id);
+    if (!compteRendu) {
+      return res.status(404).json({ error: 'Compte rendu not found' });
+    }
+
+    await compteRendu.update({ statut: 'Accepté' });
+    res.status(200).json({ message: 'Compte rendu accepted successfully', compteRendu });
+  } catch (error) {
+    console.error('Error accepting compte rendu:', error);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.refuseCompteRendu = async (req, res) => {
+  try {
+    const compteRendu = await CompteRendu.findByPk(req.params.id);
+    if (!compteRendu) {
+      return res.status(404).json({ error: 'Compte rendu not found' });
+    }
+
+    await compteRendu.update({ statut: 'Refusé' });
+    res.status(200).json({ message: 'Compte rendu refused successfully', compteRendu });
+  } catch (error) {
+    console.error('Error refusing compte rendu:', error);
+    res.status(400).json({ error: error.message });
+  }
+};

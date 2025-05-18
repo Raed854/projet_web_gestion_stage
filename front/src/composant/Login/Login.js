@@ -18,17 +18,17 @@ const Login = () => {
         password,
       });
 
-      const { message, token, role } = response.data;
+      const { message, token, role,id } = response.data;
 
       localStorage.setItem("jwt", token);
       localStorage.setItem("role", role);
-      
-      if (role === "admin") {
-        navigate("/users");
+      localStorage.setItem("userId", id);
+        if (role === "admin") {
+        navigate("/admin/dashboard");
       } else if (role === "encadrant") {
-        navigate("/users");
+        navigate("/encadrant/stage");
       } else if (role === "etudiant") {
-        navigate("/users");
+        navigate("/etudiant/stages");
       }
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message);

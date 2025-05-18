@@ -37,6 +37,7 @@ const User = sequelize.define('User', {
 
 const Stage = require('./Stage');
 const Message = require('./Message');
+const Chat = require('./Chat');
 
 // A Utilisateur (Etudiant) can effectuer many Stages
 User.hasMany(Stage, {
@@ -56,16 +57,6 @@ User.hasMany(Stage, {
 Stage.belongsTo(User, {
   foreignKey: 'encadrantId',
   as: 'encadrant'
-});
-
-// A Utilisateur can send many Messages
-User.hasMany(Message, {
-  foreignKey: 'destinataire',
-  as: 'messagesRecus'
-});
-Message.belongsTo(User, {
-  foreignKey: 'destinataire',
-  as: 'utilisateur'
 });
 
 module.exports = User;

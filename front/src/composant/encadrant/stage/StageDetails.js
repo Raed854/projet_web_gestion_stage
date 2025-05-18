@@ -169,12 +169,12 @@ const StageDetail = () => {
   }
 
   if (!stage) return null;
-
   return (
-    <div className="stage-detail-container">
-      <h1 className="stage-title">{stage.intitule}</h1>
-      
-      <div className="stage-info-grid">
+    <div className="stage-detail-wrapper">
+      <div className="stage-detail-container">
+        <h1 className="stage-title">{stage.intitule}</h1>
+        
+        <div className="stage-info-grid">
         <div className="info-item">
           <span className="info-label">Type :</span>
           <span className="info-value">{stage.typeStage}</span>
@@ -341,6 +341,7 @@ const StageDetail = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

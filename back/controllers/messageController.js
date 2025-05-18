@@ -1,11 +1,31 @@
 const Message = require('../models/Message');
+const Chat = require('../models/Chat');
 
-// CRUD operations
 exports.createMessage = async (req, res) => {
   try {
-    const message = await Message.create(req.body);
+    const { chatId, contenu } = req.body;
+    const senderId = req.userId; // From JWT token
+
+    // Verify chat exists and user is participant
+    const chat = await Chat.findByPk(chatId);
+    if (!chat) {
+      return res.status(404).json({ error: 'Chat not found' });
+    }
+
+    // Check if user is participant in chat
+    if (chat.participant1Id !== senderId && chat.participant2Id !== senderId) {
+      return res.status(403).json({ error: 'Not authorized to send messages in this chat' });
+    }
+
+    const message = await Message.create({
+      chatId,
+      senderId,
+      contenu
+    });
+
     res.status(201).json(message);
   } catch (error) {
+    console.error('Error creating message:', error);
     res.status(400).json({ error: error.message });
   }
 };
