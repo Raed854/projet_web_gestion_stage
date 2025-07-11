@@ -16,14 +16,14 @@ import CompteRenduEvaluation from './composant/encadrant/compteRendu/CompteRendu
 import Chat from './composant/chat/Chat';
 import ProtectedRoute from './composant/Login/ProtectedRoute';
 import MesStages from './composant/etudient/MesStages';
+import Profile from './composant/profile/Profile';
+
 function App() {
   return (
     <div className="App">      <Routes>        
         {/* Public routes */}
         <Route path='/' Component={Login} />
-        <Route path="/forbidden" element={<Forbidden />} />
-
-        {/* Admin routes */}
+        <Route path="/forbidden" element={<Forbidden />} />        {/* Admin routes */}
         <Route path="/admin" element={
           <ProtectedRoute allowedRoles={['admin']}>
             <Layout />
@@ -32,6 +32,7 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="stage" element={<AdminStage />} />
           <Route path="bilan" element={<Bilanrapide />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         {/* Encadrant routes */}
@@ -44,6 +45,7 @@ function App() {
           <Route path="stage" element={<StageList />} />
           <Route path="stages/:id" element={<StageDetail />} />
           <Route path="comptes-rendus" element={<CompteRenduEvaluation />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         {/* Etudiant routes */}
@@ -55,6 +57,7 @@ function App() {
           <Route path="taches" element={<MesTaches />} />
           <Route path="comptes-rendus" element={<MesCompteRendus />} />
           <Route path="stages" element={<MesStages />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         {/* Shared routes - accessible by all authenticated users */}

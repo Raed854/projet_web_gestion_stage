@@ -41,7 +41,6 @@ html, body {
     border-radius: 8px;
     overflow: hidden;
   }
-  
   thead {
     background-color: #3a4c66;
     color: white;
@@ -82,7 +81,6 @@ html, body {
   td button {
     margin: 0 8px; /* Added specific margin for table buttons */
   }
-  
   button:first-of-type {
     background-color: #4a90e2;
     color: white;
@@ -100,7 +98,6 @@ html, body {
   button:last-of-type:hover {
     background-color: #c0392b;
   }
-  
   /* Create User Button */
   .mainContent > button {
     background-color: #4a90e2;
@@ -174,7 +171,6 @@ html, body {
     font-size: 14px;
     box-sizing: border-box;
   }
-  
   .popupContent input:focus {
     outline: none;
     border-color: #4a90e2;
@@ -188,7 +184,6 @@ html, body {
     cursor: pointer;
     transition: background-color 0.2s;
   }
-  
   .popupContent button[type="submit"] {
     background-color: #4a90e2;
     color: white;

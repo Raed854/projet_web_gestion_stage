@@ -13,7 +13,8 @@ import {
   faSignOutAlt,
   faUserGraduate,
   faBook,
-  faComments
+  faComments,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 
 const SideBar = () => {
@@ -24,8 +25,7 @@ const SideBar = () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("role");
     navigate("/");
-  };
-  const renderAdminLinks = () => (
+  };  const renderAdminLinks = () => (
     <>
       <li>
         <Link to="/admin/dashboard">
@@ -42,9 +42,13 @@ const SideBar = () => {
           <FontAwesomeIcon icon={faChartBar} /> Bilan Rapide
         </Link>
       </li>
+      <li>
+        <Link to="/admin/profile">
+          <FontAwesomeIcon icon={faUser} /> Mon Profil
+        </Link>
+      </li>
     </>
   );
-
   const renderEncadrantLinks = () => (
     <>
       <li>
@@ -67,9 +71,13 @@ const SideBar = () => {
           <FontAwesomeIcon icon={faComments} /> Messages
         </Link>
       </li>
+      <li>
+        <Link to="/encadrant/profile">
+          <FontAwesomeIcon icon={faUser} /> Mon Profil
+        </Link>
+      </li>
     </>
-  );
-  const renderEtudiantLinks = () => (
+  );  const renderEtudiantLinks = () => (
     <>
       <li>
         <Link to="/etudiant/stages">
@@ -89,6 +97,11 @@ const SideBar = () => {
       <li>
         <Link to="/chat">
           <FontAwesomeIcon icon={faComments} /> Messages
+        </Link>
+      </li>
+      <li>
+        <Link to="/etudiant/profile">
+          <FontAwesomeIcon icon={faUser} /> Mon Profil
         </Link>
       </li>
     </>

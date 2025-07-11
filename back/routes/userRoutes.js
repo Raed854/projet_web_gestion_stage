@@ -14,6 +14,7 @@ router.get('/encadrants', userController.verifyToken, userController.getEncadran
 
 router.get('/:id', userController.verifyToken, userController.getUserById);
 router.put('/:id', userController.verifyToken, userController.updateUser);
+router.put('/:id/password', userController.verifyToken, userController.changePassword);
 router.delete('/:id', userController.verifyToken, userController.deleteUser);
 
 // Login route
