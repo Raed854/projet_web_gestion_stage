@@ -14,6 +14,22 @@ const CompteRendu = sequelize.define('CompteRendu', {
   },
   statut: {
     type: DataTypes.ENUM('Accepté', 'Refusé', 'En attente')
+  },
+  filePath: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  fileName: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  fileSize: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  uploadedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
   }
 }, {
   tableName: 'compte_rendus',

@@ -48,7 +48,7 @@ app.use((req, res, next) => {
   next();
 });
 
-sequelize.sync() // Only sync without recreating tables
+sequelize.sync() // Back to normal sync after tables are created
   .then(() => {
     console.log('Database synced');
     app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
